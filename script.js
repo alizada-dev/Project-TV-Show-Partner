@@ -18,31 +18,40 @@ function createEpisodeCard(episode) {
 
 
 const container = document.getElementById("episode-container");
+const searchBox = document.getElementById("search");
+const countEpisodes = document.getElementById("episode-count");
 
 const episodes = getAllEpisodes();
 
 function render() {
   container.textContent = "";
 
+  const term = searchBox.value.toLowerCase();
+
   const filteredEpisodes = episodes.filter((episode) => {
-    const term = searchBox.value.toLowerCase();
-    
+
     return (
       episode.name.toLowerCase().includes(term) ||
       episode.summary.toLowerCase().includes(term)
     )
   });
 
-  const episodeCard = filteredEpisodes.map(createEpisodeCard);
+  const episodeCards = filteredEpisodes.map(createEpisodeCard);
 
-  container.append(...episodeCard);
+  container.append(...episodeCards);
+
+  if (term.length > 0) {
+    countEpisodes.textContent =
+      `Displaying ${filteredEpisodes.length}/${episodes.length} episodes.`;
+  } else {
+    countEpisodes.textContent = "";
+  }
 }
 
-const searchBox = document.getElementById("search");
 searchBox.addEventListener("input", handleInput);
 
 function handleInput() {
-  render();  
+  render();
 }
 
 render();
