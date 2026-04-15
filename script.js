@@ -1,19 +1,8 @@
 
-//You can edit ALL of the code here
-function setup() {
-  const allEpisodes = getAllEpisodes();
-  //Using map on the array of episodes to pass each as an argument to the function
-  allEpisodes.forEach((oneEpisode) => createEpisodeCard(oneEpisode));
-}
-
-const container = document.getElementById("episode-container");
-
 function createEpisodeCard(episode) {
 
-  // Dom Manipulation
   const card = document.getElementById("episode-card").content.cloneNode(true);
 
-  //To show season code
   const seasonNo = episode.season.toString().padStart(2, "0");
   const episodeNo = episode.number.toString().padStart(2, "0");
 
@@ -22,10 +11,38 @@ function createEpisodeCard(episode) {
   card.querySelector("img").src = episode.image.medium;
 
   // Using innerHTML because summary contains p tag
-  const summary = card.querySelector(".episode-summary");
-  summary.innerHTML = episode.summary;
+  card.querySelector(".episode-summary").innerHTML = episode.summary;
 
-  container.appendChild(card);
+  return card;
 }
 
-window.onload = setup;
+
+const container = document.getElementById("episode-container");
+
+const episodes = getAllEpisodes();
+
+function render() {
+  container.textContent = "";
+
+  const filteredEpisodes = episodes.filter((episode) => {
+    const term = searchBox.value.toLowerCase();
+    
+    return (
+      episode.name.toLowerCase().includes(term) ||
+      episode.summary.toLowerCase().includes(term)
+    )
+  });
+
+  const episodeCard = filteredEpisodes.map(createEpisodeCard);
+
+  container.append(...episodeCard);
+}
+
+const searchBox = document.getElementById("search");
+searchBox.addEventListener("input", handleInput);
+
+function handleInput() {
+  render();  
+}
+
+render();
