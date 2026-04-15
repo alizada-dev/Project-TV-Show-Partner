@@ -1,30 +1,36 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TV Show Project | Ofonimeedak</title>
-    <link href="style.css" rel="stylesheet" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link href="style.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
   </head>
 
   <body>
+    <header class="header">
+      <h1>Game of Thrones</h1>
+    </header>
+
     <main id="root">
-      <template id="movie-card">
-        <section>
-          <h1>
-            <span class="episode-name"> </span>-
-            <span class="season-No"> </span>
-          </h1>
-          <h2 class="episode-no"></h2>
-          <h2 class="episode-code"></h2>
-          <img src="./hh" alt="movie poster" />
-          <details id="movie-details">
-            <summary class="movie-summary"></summary>
-          </details>
-        </section>
+
+      <!-- Episodes container -->
+      <div id="episode-container" class="episode-grid"></div>
+
+      <!-- Template -->
+      <template id="episode-card">
+        <article class="episode-card">
+          <h2 class="episode-title">
+            <span class="episode-name"></span>
+            <span class="episode-code"></span>
+          </h2>
+          <img class="episode-image" alt="episode image">
+          <p class="episode-summary"></p>
+        </article>
       </template>
     </main>
+
     <footer>
       <p>API Consumed from <a href="https://tvmaze.com/">TVMaze.com</a></p>
     </footer>

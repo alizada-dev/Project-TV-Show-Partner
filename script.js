@@ -1,29 +1,31 @@
-//const getOneEpisodes =require('./episodes')
 
 //You can edit ALL of the code here
 function setup() {
   const allEpisodes = getAllEpisodes();
   //Using map on the array of episodes to pass each as an argument to the function
-  allEpisodes.map((oneEpisode) => makePageForEpisodes(oneEpisode));
+  allEpisodes.forEach((oneEpisode) => createEpisodeCard(oneEpisode));
 }
 
-function makePageForEpisodes(episodeList) {
+const container = document.getElementById("episode-container");
+
+function createEpisodeCard(episode) {
+
   // Dom Manipulation
-  const rootElem = document.getElementById("root");
-  const card = document.getElementById("movie-card").content.cloneNode(true);
-  card.querySelector(".season-No").textContent = episodeList.season;
-  card.querySelector(".episode-name").textContent = episodeList.name;
-  card.querySelector(".episode-no").textContent = episodeList.number;
-  card.querySelector("img").src = episodeList.image.medium;
+  const card = document.getElementById("episode-card").content.cloneNode(true);
 
   //To show season code
-  const seasonNo = episodeList.season.toString().padStart(2, "0");
-  const episodeNo = episodeList.number.toString().padStart(2, "0");
-  card.querySelector(".episode-code").textContent = `S${seasonNo}E${episodeNo}`;
+  const seasonNo = episode.season.toString().padStart(2, "0");
+  const episodeNo = episode.number.toString().padStart(2, "0");
+
+  card.querySelector(".episode-name").textContent = episode.name;
+  card.querySelector(".episode-code").textContent = `- S${seasonNo}E${episodeNo}`;
+  card.querySelector("img").src = episode.image.medium;
+
   // Using innerHTML because summary contains p tag
-  const summary = card.querySelector("summary");
-  summary.innerHTML = episodeList.summary;
-  rootElem.appendChild(card);
+  const summary = card.querySelector(".episode-summary");
+  summary.innerHTML = episode.summary;
+
+  container.appendChild(card);
 }
 
 window.onload = setup;
