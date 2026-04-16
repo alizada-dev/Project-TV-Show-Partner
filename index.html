@@ -15,11 +15,16 @@
 
     <main id="root">
 
-      <!-- Search box container -->
-      <div class="searchbox-container">
-        <label>Search <input type="text" id="search" placeholder="Search episodes"></label>
+      <!-- filtering container -->
+      <div class="filter-container">
 
+        <select id="episodes">
+          <option disabled>Episodes</option>
+        </select>
+        
         <span id="episode-count"></span>
+
+        <label>Search <input type="text" id="search" placeholder="Search episodes"></label>
       </div>
 
       <!-- Episodes container -->
