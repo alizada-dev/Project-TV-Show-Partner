@@ -5,8 +5,18 @@ let state = {
 };
 
 const fetchFilms = async () => {
-  const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
-  return await response.json();
+  try {
+    const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
+
+    if (!response.ok) {
+      throw new Error(`Error status:${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    container.innerHTML=""
+    const erroMessage=document.getElementById("error").textContent =`${error.message} episode from server, please try again`
+  
+  }
 };
 
 async function init() {
@@ -41,7 +51,7 @@ const countEpisodes = document.getElementById("episode-count");
 
 function render() {
   container.textContent = "";
-  
+
   const filteredEpisodes = state.films.filter((episode) => {
     const seasonNo = episode.season.toString().padStart(2, "0");
     const episodeNo = episode.number.toString().padStart(2, "0");
@@ -52,7 +62,6 @@ function render() {
 
     const matchesDropdown =
       state.selectedVAlue === "" || state.selectedVAlue === code;
-  
 
     return matchesSearch && matchesDropdown;
   });
